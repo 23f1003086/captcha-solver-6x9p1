@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captcha Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        #error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Captcha Solver</h1>
+    <img id="captchaImage" src="" alt="Captcha Image">
+    <div id="result"></div>
+    <div id="error"></div>
+
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function displayCaptcha(url) {
+            const captchaImage = document.getElementById('captchaImage');
+            captchaImage.src = url;
+        }
+
+        function solveCaptcha() {
+            const captchaText = "Sample Solved Text"; // Simulated solved text
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = captchaText;
+        }
+
+        function handleError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+        }
+
+        window.onload = function() {
+            const captchaUrl = getQueryParameter('url') || 'sample.png';
+            displayCaptcha(captchaUrl);
+
+            setTimeout(() => {
+                if (document.getElementById('captchaImage').complete) {
+                    solveCaptcha();
+                } else {
+                    handleError('Failed to load captcha image.');
+                }
+            }, 15000);
+        };
+    </script>
+</body>
+</html>
